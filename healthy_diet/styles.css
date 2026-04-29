@@ -1,28 +1,71 @@
-img, p, h1, h2, .divider{
-	width: 100%;
-	max-width: 640px;
-	margin-left: auto;
-	margin-right: auto;
+img, p, h1, h2, .divider {
+    width: 100%;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
 }
-
+ 
 img {
-	display: block;
+    display: block;
     padding: 15px 0px;
 }
-
+ 
 p {
-	font-size: 18px;
-	line-height: 1.4;
+    font-size: 18px;
+    line-height: 1.4;
     font-family: "Crimson Text";
 }
-
-h1, h2 { 
+ 
+h1, h2 {
     font-family: "Roboto";
-    }
+}
+ 
 .divider {
-height: 2px;
-background-color: #0868ac;
-margin-top: 10px; 
-margin-bottom: 10px;
+    height: 2px;
+    background-color: #9b1c1c;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+ 
+/* ── TikTok row: three videos side by side ── */
+.tiktok-row {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 0;
+}
+ 
+.tiktok-row .tiktok-embed {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0 !important; /* override TikTok's default margins */
+}
+ 
+/* Stack vertically on small screens */
+@media (max-width: 640px) {
+    .tiktok-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+ 
+/* ── Chart 3 (map): wider than the default content column ── */
+#chart3-container {
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 0;
+}
+ 
+#chart3-container img {
+    max-width: 100%;
+    padding: 0;
 }
     

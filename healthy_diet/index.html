@@ -1,25 +1,450 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <title>Can Food Be Medicine for Everyone?</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    </head>    
-    <body>
-        <h1>This is my Data 1500 Project</h1>
-        <p>By: Sneha Tallam</p>
-        <div class ="divider"></div>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
 
-        </p>
-        <img src = "images/rhode_island.png"
-        alt = "100% stacked area chart of the population share of the five counties of Rhode Island, 
-        showing that Providence's share declined starting around WWII." >
-        <img src = "images/balanced_diet.jpg">
-        <h2>About this story</h2>
-        <p>Here’s a <a href="https://www.brown.edu/">link</a>.</p>
+        <style>
+            /* ── Base ───────────────────────────── */
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+            :root {
+                --cream:   #faf7f2;
+                --ink:     #1a1a1a;
+                --mid:     #555;
+                --rule:    #d4c9b8;
+                --accent:  #b5451b;
+                --max-w:   740px;
+            }
+
+            body {
+                background: var(--cream);
+                color: var(--ink);
+                font-family: 'Crimson Text', Georgia, serif;
+                font-size: 1.2rem;
+                line-height: 1.8;
+            }
+
+            /* ── Layout wrapper ─────────────────── */
+            .article {
+                max-width: var(--max-w);
+                margin: 0 auto;
+                padding: 4rem 1.5rem 6rem;
+            }
+
+            /* ── Header ─────────────────────────── */
+            .article-header {
+                border-top: 3px solid #9b1c1c;
+                padding-top: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .kicker {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 0.75rem;
+            }
+
+            h1 {
+                font-family: 'Crimson Text', Georgia, serif;
+                font-size: clamp(2rem, 5vw, 3.2rem);
+                font-weight: 700;
+                line-height: 1.15;
+                margin-bottom: 1rem;
+            }
+
+            .byline {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.8rem;
+                letter-spacing: 0.06em;
+                color: var(--mid);
+                border-top: 1px solid #9b1c1c;
+                padding-top: 0.75rem;
+                margin-top: 0.75rem;
+            }
+
+            /* ── Body text ──────────────────────── */
+            .article p {
+                margin-bottom: 1.4rem;
+                color: #222;
+            }
+
+            /* ── Section headings ───────────────── */
+            h2 {
+                font-family: 'Crimson Text', Georgia, serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                font-style: normal;
+                margin: 2.8rem 0 0.9rem;
+                padding-bottom: 0.4rem;
+                border-bottom: 1px solid var(--rule);
+            }
+
+            /* ── Horizontal rule ────────────────── */
+            .divider {
+                border: none;
+                border-top: 2px solid #9b1c1c;
+                margin: 2rem 0;
+            }
+
+            /* ── Pull quote ─────────────────────── */
+            .pull-quote {
+                border-left: 4px solid var(--accent);
+                margin: 2rem 0;
+                padding: 0.6rem 1.4rem;
+                font-size: 1.35rem;
+                font-style: normal;
+                line-height: 1.5;
+            }
+
+            /* ── Chart containers ───────────────── */
+            .chart-block {
+                margin: 2.5rem 0;
+            }
+
+            .chart-label {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--mid);
+                margin-bottom: 0.5rem;
+            }
+
+            .chart-title {
+                font-family: 'Crimson Text', Georgia, serif;
+                font-size: 1.15rem;
+                font-weight: 600;
+                margin-bottom: 0.25rem;
+            }
+
+            .chart-subtitle {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.82rem;
+                color: var(--mid);
+                margin-bottom: 1rem;
+                line-height: 1.4;
+            }
+
+            /* Placeholder box for images / D3 charts */
+            .chart-placeholder {
+                width: 100%;
+                min-height: 340px;
+                background: #f0ebe2;
+                border: 1.5px dashed #c4b9a8;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #999;
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.82rem;
+                letter-spacing: 0.05em;
+            }
+
+            /* When you swap in a real image, give it full width */
+            .chart-block img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 4px;
+            }
+
+            /* D3 scatter chart lives here */
+            #myChart svg {
+                width: 100%;
+                height: auto;
+            }
+
+            .chart-source {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.73rem;
+                color: #999;
+                margin-top: 0.5rem;
+            }
+
+            /* ── Tooltip ────────────────────────── */
+            #myTooltip {
+                font-family: 'Roboto', sans-serif;
+                font-size: 0.8rem;
+                color: var(--mid);
+                margin-top: 0.3rem;
+                min-height: 1.2em;
+            }
+
+            /* ── Links ──────────────────────────── */
+            a { color: var(--accent); text-underline-offset: 3px; }
+            a:hover { opacity: 0.75; }
+
+            /* ── TikTok row ──────────────────────── */
+            .tiktok-row {
+                display: flex;
+                flex-direction: row;
+                gap: 12px;
+                justify-content: center;
+                align-items: flex-start;
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 960px;
+                padding: 15px 1rem;
+                box-sizing: border-box;
+            }
+            .tiktok-row .tiktok-embed {
+                flex: 1 1 0;
+                min-width: 0;
+                margin: 0 !important;
+            }
+            @media (max-width: 640px) {
+                .tiktok-row {
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+
+            /* ── Wide chart (Chart 3 map) ────────── */
+            .chart-block--wide {
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 960px;
+                padding: 0 1rem;
+                box-sizing: border-box;
+            }
+            .chart-block--wide .chart-placeholder {
+                min-height: 420px;
+            }
+
+            /* ── Icon strip ─────────────────────── */
+            .icon-strip {
+                display: flex;
+                justify-content: center;
+                gap: 1.4rem;
+                margin: 1.6rem 0;
+                opacity: 0.55;
+            }
+            .icon-strip svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            /* ── Section heading icons ───────────── */
+            h2 .h2-icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 0.45rem;
+                margin-bottom: 0.15rem;
+                opacity: 0.7;
+            }
+            h2 .h2-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            /* ── Concluding section ─────────────── */
+            .conclusion {
+                margin-top: 3rem;
+                padding-top: 1.5rem;
+                border-top: 3px solid #9b1c1c;
+            }
+
+            .conclusion h2 {
+                font-style: normal;
+                font-size: 1.3rem;
+                border-bottom: none;
+                margin-top: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="article">
+
+            <!-- ── Header ───────────────────────── -->
+            <header class="article-header">
+                <h1>Can Food Be Medicine for Everyone?</h1>
+                <p class="byline">By Sneha Tallam</p>
+            </header>
+
+            <!-- ── TikTok embeds ──────────────────── -->
+            <div class="tiktok-row">
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@trevor_denney/video/7609897945885887758"
+                    data-video-id="7609897945885887758"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@ebbymoyer/video/7623943289879710989"
+                    data-video-id="7623943289879710989"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@theobergmann_/video/7596897828106980630"
+                    data-video-id="7596897828106980630"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+            </div>
+            <script async src="https://www.tiktok.com/embed.js"></script>
+
+            <!-- ── Introduction ─────────────────── -->
+            <p>
+                Scroll through social media and you'll quickly encounter bold claims about food as medicine: diets that promise to cure chronic illness, boost metabolism, or prevent disease entirely. Some trends are relatively harmless, others far less so—extreme diets promoted online have, in some cases, led to serious health consequences.
+            </p>
+            <p>
+                But beneath the noise, the core idea isn't new or unfounded. The concept that food can shape health dates back centuries, and modern research continues to reinforce it. Across nutritional science, there is growing evidence that diet plays a central role in preventing and managing chronic conditions such as obesity, type 2 diabetes, cardiovascular disease, and certain cancers. Diets rich in fruits, vegetables, lean proteins, and healthy fats—and low in processed foods, sugar, and excess sodium—are consistently associated with better health outcomes.
+            </p>
+            <p>
+                Yet this raises a more difficult question: if food truly is medicine, who actually has access to it?
+            </p>
+
+            <div class="divider"></div>
+
+            <!-- Decorative icon strip -->
+            <div class="icon-strip" aria-hidden="true">
+                <!-- Apple -->
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 8 C32 8 34 2 40 3" stroke="#8b1a1a" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M18 20 C10 24 8 36 10 46 C12 54 18 60 24 58 C27 57 29 56 32 56 C35 56 37 57 40 58 C46 60 52 54 54 46 C56 36 54 24 46 20 C41 17 36 18 32 21 C28 18 23 17 18 20Z" fill="#c0392b" opacity="0.85"/>
+                    <path d="M32 21 C32 21 32 15 36 12 C40 9 44 10 44 10" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <!-- Carrot -->
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M34 14 L18 52 C18 52 28 50 36 42 C44 34 46 22 34 14Z" fill="#e67e22" opacity="0.9"/>
+                    <path d="M34 14 C34 14 30 6 26 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M34 14 C34 14 38 5 42 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M34 14 C34 14 34 4 34 6" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                </svg>
+                <!-- Broccoli -->
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="29" y="38" width="6" height="18" rx="3" fill="#27ae60" opacity="0.8"/>
+                    <circle cx="32" cy="26" r="12" fill="#2ecc71" opacity="0.85"/>
+                    <circle cx="22" cy="30" r="8" fill="#27ae60" opacity="0.85"/>
+                    <circle cx="42" cy="30" r="8" fill="#27ae60" opacity="0.85"/>
+                    <circle cx="32" cy="16" r="7" fill="#2ecc71" opacity="0.9"/>
+                </svg>
+                <!-- Lemon -->
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="32" cy="32" rx="18" ry="14" fill="#f1c40f" opacity="0.9"/>
+                    <path d="M14 32 Q32 20 50 32" stroke="#f39c12" stroke-width="1.5" fill="none"/>
+                    <path d="M14 32 Q32 44 50 32" stroke="#f39c12" stroke-width="1.5" fill="none"/>
+                    <path d="M32 8 C32 8 36 4 40 6" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <!-- Tomato -->
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="36" r="18" fill="#e74c3c" opacity="0.85"/>
+                    <path d="M32 18 C32 18 32 10 28 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M32 18 C32 18 38 12 42 14" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path d="M32 18 C32 18 26 12 22 14" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- ── Section 1: Diet & Chronic Disease ── -->
+            <h2><span class="h2-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="36" r="18" fill="#e74c3c" opacity="0.7"/><path d="M32 18 C32 18 32 10 28 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round"/><path d="M32 18 C32 18 38 12 42 14" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/></svg></span>Diet and Chronic Disease in the United States</h2>
+
+            <p>
+                In the United States, the relationship between diet and chronic disease is measurable. States with poorer diet quality tend to experience higher rates of chronic illness, revealing a clear and concerning correlation.
+            </p>
+
+            <!-- CHART 1 placeholder -->
+            <div class="chart-block">
+                <!-- Replace the div below with your <img> tag or D3 mount point -->
+                <div class="chart-placeholder">[ Insert Chart 1 here ]</div>
+            </div>
+
+            <!-- ── Section 2: The Food is Medicine Movement ── -->
+            <h2><span class="h2-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34 14 L18 52 C18 52 28 50 36 42 C44 34 46 22 34 14Z" fill="#e67e22" opacity="0.8"/><path d="M34 14 C34 14 34 4 34 6" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round"/></svg></span>The Food is Medicine Movement</h2>
+
+            <p>
+                This connection has shaped real-world interventions. The modern "Food is Medicine" movement gained traction in the late 20th century during the HIV/AIDS epidemic, when activists began delivering medically tailored meals to individuals experiencing both illness and malnutrition. These programs demonstrated that food could function not just as sustenance, but as a form of care—improving health outcomes while also addressing social isolation.
+            </p>
+            <p>
+                Today, organizations such as <a href="https://foodandfriends.org/">Food &amp; Friends</a> continue this work by preparing and delivering medically tailored meals in collaboration with registered dietitians and trained chefs. More broadly, global institutions like the <a href="https://www.rockefellerfoundation.org/perspective/building-a-global-movement-how-food-is-medicine-is-transforming-healthcare-worldwide/">Rockefeller Foundation</a> have helped elevate Food is Medicine into an international priority, convening leaders to align research, policy, and implementation strategies.
+            </p>
+            <p>
+                These efforts build on earlier global commitments to nutrition, including the Rome Declaration on Nutrition (2014), the Sustainable Development Goals (2015), and the UN Decade of Action on Nutrition (2016), all of which emphasize improving access to healthy, sustainable diets worldwide.
+            </p>
+
+            <!-- ── Section 3: Global Progress ───────── -->
+            <h2><span class="h2-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="18" ry="14" fill="#f1c40f" opacity="0.85"/><path d="M32 8 C32 8 36 4 40 6" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/></svg></span>Global Progress—and Its Limits</h2>
+
+            <p>
+                Globally, there has been measurable progress in improving the affordability of a healthy diet. The gap is narrowing, suggesting that policy efforts and international initiatives are beginning to have an impact.
+            </p>
+
+            <!-- CHART 2 placeholder -->
+            <div class="chart-block">
+                <!-- Replace the div below with your <img> tag or D3 mount point -->
+                <div class="chart-placeholder">[ Insert Chart 2 here ]</div>
+            </div>
+
+            <p>
+                However, "more affordable" does not mean affordable enough. For millions of people—particularly in low- and middle-income countries—even the minimum cost of a nutritionally adequate diet remains out of reach. Research suggests that individuals would need to spend at least <a href="https://www.csis.org/analysis/three-billion-people-cannot-afford-healthy-diets-what-does-mean-next-green-revolution">$3.75 per day</a> to meet dietary guidelines, with roughly $1.50 allocated to fruits and vegetables alone.
+            </p>
+            <p>
+                For many households, this is simply not feasible. Diets often rely on cheaper, calorie-dense staples like rice, wheat, and corn. While these foods provide energy, they lack essential nutrients. Diets low in fruits and vegetables are among the leading contributors to illness and premature death globally, with an estimated 39% of diet-related deaths attributable to inadequate intake.
+            </p>
+
+
+            <!-- ── Section 4: Global Disparities ──────── -->
+            <h2><span class="h2-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="29" y="38" width="6" height="18" rx="3" fill="#27ae60" opacity="0.8"/><circle cx="32" cy="26" r="12" fill="#2ecc71" opacity="0.85"/><circle cx="22" cy="30" r="8" fill="#27ae60" opacity="0.85"/><circle cx="42" cy="30" r="8" fill="#27ae60" opacity="0.85"/></svg></span>A Global Look at Fruit and Vegetable Intake</h2>
+
+            <p>
+                These disparities become even more visible at a global scale. In many countries—particularly across parts of Africa and Southeast Asia—average fruit and vegetable intake falls well below recommended levels.
+            </p>
+
+            <!-- CHART 3 placeholder -->
+            <div class="chart-block chart-block--wide">
+                <!-- Replace the div below with your <img> tag or D3 mount point -->
+                <div class="chart-placeholder">[ Insert Chart 3 here ]</div>
+            </div>
+
+            <p>
+                This is not simply a matter of personal choice or awareness. It reflects structural barriers: limited access, high costs, and food systems that do not support diverse, nutrient-rich diets.
+            </p>
+            <p>
+                At the same time, the popular narrative around food as medicine—often shaped by influencers and wellness culture—tends to overlook these realities. Recommendations that emphasize optimization and prevention assume a level of access that many people simply do not have.
+            </p>
+            <p>
+                Even in the United States, access remains uneven. Over 23 million Americans live in food deserts, where obtaining fresh, affordable food is a persistent challenge. Globally, the barriers are even more pronounced.
+            </p>
+
+            <!-- ── Concluding section ─────────────── -->
+            <div class="conclusion">
+                <h2>Concluding Thoughts</h2>
+                <p>
+                    The growing momentum behind the Food is Medicine movement signals an important shift in how we think about health. But the data tells a more complicated story.
+                </p>
+                <p>
+                    Food has the potential to be a powerful tool for prevention and care—but only when it is accessible, affordable, and culturally relevant. Without addressing these structural barriers, the benefits of food as medicine will remain concentrated among those who already have the resources to act on it.
+                </p>
+                <p>
+                    So the question is not simply whether food can be medicine. It is whether we are willing to build systems that make it medicine for everyone.
+                </p>
+            </div>
+
+            <!-- ── D3 interactive chart section ──── -->
+            <h2>About this Story</h2>
+            <p>Here's a <a href="https://www.brown.edu/">link</a>.</p>
+            <div class="chart-block">
+                <div id="myChart"></div>
+                <div id="myTooltip">_</div>
+            </div>
+
+        </div><!-- /article -->
+
     </body>
 </html>
-
-
