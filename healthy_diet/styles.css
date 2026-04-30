@@ -9,7 +9,7 @@
 }
 
 :root {
-    --cream:   #faf7f2;
+    --cream:   #efede4;
     --ink:     #1a1a1a;
     --mid:     #555;
     --rule:    #d4c9b8;
@@ -197,11 +197,11 @@ a:hover { opacity: 0.75; }
 
 /* Chart 3 — full viewport width */
 .chart-block--wide {
-    width: 100vw;
+    width: 130%;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    max-width: 1100px;
+    max-width: 960px;
     padding: 0 1rem;
 }
 
