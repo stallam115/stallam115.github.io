@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Can Food Be Medicine for Everyone?</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+    </head>
+
+    <body>
+
+        <!-- ── Background fruit icons ───────── -->
+        <script>
+            const fruits = [
+                /* Apple */
+                `<svg width="90" height="90" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 8 C32 8 34 2 40 3" stroke="#8b1a1a" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M18 20 C10 24 8 36 10 46 C12 54 18 60 24 58 C27 57 29 56 32 56 C35 56 37 57 40 58 C46 60 52 54 54 46 C56 36 54 24 46 20 C41 17 36 18 32 21 C28 18 23 17 18 20Z" fill="#c0392b" opacity="0.85"/>
+                    <path d="M32 21 C32 21 32 15 36 12 C40 9 44 10 44 10" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>`,
+                /* Carrot */
+                `<svg width="90" height="90" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M34 14 L18 52 C18 52 28 50 36 42 C44 34 46 22 34 14Z" fill="#e67e22" opacity="0.9"/>
+                    <path d="M34 14 C34 14 30 6 26 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M34 14 C34 14 38 5 42 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M34 14 C34 14 34 4 34 6" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                </svg>`,
+                /* Broccoli */
+                `<svg width="90" height="90" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="29" y="38" width="6" height="18" rx="3" fill="#27ae60" opacity="0.8"/>
+                    <circle cx="32" cy="26" r="12" fill="#2ecc71" opacity="0.85"/>
+                    <circle cx="22" cy="30" r="8" fill="#27ae60" opacity="0.85"/>
+                    <circle cx="42" cy="30" r="8" fill="#27ae60" opacity="0.85"/>
+                    <circle cx="32" cy="16" r="7" fill="#2ecc71" opacity="0.9"/>
+                </svg>`,
+                /* Lemon */
+                `<svg width="90" height="90" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="32" cy="32" rx="18" ry="14" fill="#f1c40f" opacity="0.9"/>
+                    <path d="M14 32 Q32 20 50 32" stroke="#f39c12" stroke-width="1.5" fill="none"/>
+                    <path d="M14 32 Q32 44 50 32" stroke="#f39c12" stroke-width="1.5" fill="none"/>
+                    <path d="M32 8 C32 8 36 4 40 6" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>`,
+                /* Tomato */
+                `<svg width="90" height="90" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="36" r="18" fill="#e74c3c" opacity="0.85"/>
+                    <path d="M32 18 C32 18 32 10 28 8" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M32 18 C32 18 38 12 42 14" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path d="M32 18 C32 18 26 12 22 14" stroke="#27ae60" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>`
+            ];
+
+            /* Placement configs: [top%, left%, size px, rotation deg] */
+            const placements = [
+                [4,   3,  70,  15],
+                [4,  88,  55, -20],
+                [12, 92,  80,  30],
+                [18,  2,  60, -10],
+                [25, 95,  65,  45],
+                [33,  5,  85,  -5],
+                [40, 90,  50,  20],
+                [50,  2,  75,  10],
+                [55, 93,  90, -30],
+                [62,  6,  55,  25],
+                [68, 88,  70, -15],
+                [74,  3,  65,  35],
+                [80, 92,  80,  -8],
+                [87,  5,  50,  18],
+                [92, 88,  60, -25],
+                [96,  2,  75,  12],
+            ];
+
+            document.addEventListener('DOMContentLoaded', function() {
+                placements.forEach(function([top, left, size, rotate], i) {
+                    const fruitSvg = fruits[i % fruits.length];
+                    const div = document.createElement('div');
+                    div.className = 'bg-fruit';
+                    div.setAttribute('aria-hidden', 'true');
+                    div.style.top = top + '%';
+                    div.style.left = left + '%';
+                    div.style.transform = 'rotate(' + rotate + 'deg)';
+                    div.style.width = size + 'px';
+                    div.style.height = size + 'px';
+                    div.innerHTML = fruitSvg.replace(/width="\d+"/, 'width="' + size + '"').replace(/height="\d+"/, 'height="' + size + '"');
+                    document.body.appendChild(div);
+                });
+            });
+        </script>
+
+        <div class="article">
+
+            <!-- ── Header ───────────────────────── -->
+            <header class="article-header">
+                <h1>Can Food Be Medicine for Everyone?</h1>
+                <p>By Sneha Tallam</p>
+                <p>April 30, 2026</p>
+            </header>
+
+            <!-- ── TikTok embeds ─────────────────── -->
+            <div class="tiktok-row">
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@trevor_denney/video/7609897945885887758"
+                    data-video-id="7609897945885887758"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@ebbymoyer/video/7623943289879710989"
+                    data-video-id="7623943289879710989"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+                <blockquote class="tiktok-embed"
+                    cite="https://www.tiktok.com/@theobergmann_/video/7596897828106980630"
+                    data-video-id="7596897828106980630"
+                    style="max-width:325px; min-width:225px;">
+                    <section></section>
+                </blockquote>
+            </div>
+            <script async src="https://www.tiktok.com/embed.js"></script>
+
+            <!-- ── Introduction ─────────────────── -->
+            <p>
+                Scroll through social media and you'll quickly encounter bold claims about food as medicine: diets that promise to cure chronic illness, boost metabolism, or prevent disease entirely. Some trends are relatively harmless, others far less so—extreme diets promoted online have, in <a href="https://time.com/7295323/social-media-case-instagram-tiktok/"> some cases </a>, led to serious health consequences.
+            </p>
+            <p>
+                But beneath the noise, the core idea isn't new or unfounded. The concept that food can shape health dates back centuries, and modern research continues to reinforce it. Across nutritional science, there is <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7071223/">growing evidence</a>  that diet plays a central role in preventing and managing chronic conditions such as obesity, type 2 diabetes, cardiovascular disease, and certain cancers. Diets rich in fruits, vegetables, lean proteins, healthy fats, and low in processed foods, sugar, and excess sodium, are consistently associated with better health outcomes.
+            </p>
+            <p>
+                Yet this raises a more difficult question: if food truly is medicine, who actually has access to it?
+            </p>
+
+            <div class="divider"></div>
+
+            <!-- ── Section 1 ──────────────────────── -->
+            <h2>The Food is Medicine Movement</h2>
+            <p>
+                In the United States, the relationship between diet and chronic disease is measurable, with some <a href="https://newsnetwork.mayoclinic.org/discussion/mayo-clinic-minute-mayo-clinic-minute-relationship-between-food-disease-stronger-than-you-may-think/">healthcare professionals</a> stating nutrition as the number one cause of early death and early disease in the country.
+            </p>
+
+            <!-- CHART 1 — slightly wider than body -->
+            <div class="chart-block chart-block--mid">
+                <img src="images/FruitandChronicScatter.gif" alt="Scatter chart: fruit intake vs chronic disease rates by state">
+            </div>
+
+            <p>
+                This connection has shaped real-world interventions. The modern "Food is Medicine" movement gained traction in the late 20th century during the HIV/AIDS epidemic, when activists began delivering medically tailored meals to individuals experiencing both illness and malnutrition. These programs demonstrated that food could function not just as sustenance, but as a form of care—improving health outcomes while also addressing social isolation.
+            </p>
+            <p>
+                Today, organizations such as <a href="https://foodandfriends.org/">Food &amp; Friends</a> continue this work by preparing and delivering medically tailored meals in collaboration with registered dietitians and trained chefs. More broadly, global institutions like the <a href="https://www.rockefellerfoundation.org/perspective/building-a-global-movement-how-food-is-medicine-is-transforming-healthcare-worldwide/">Rockefeller Foundation</a> have helped elevate Food is Medicine into an international priority, convening leaders to align research, policy, and implementation strategies.
+            </p>
+            <p>
+                These efforts build on earlier global commitments to nutrition, including the Rome Declaration on Nutrition (2014), the Sustainable Development Goals (2015), and the UN Decade of Action on Nutrition (2016), all of which emphasize improving access to healthy, sustainable diets worldwide.
+            </p>
+
+            <!-- ── Section 3 ──────────────────────── -->
+            <h2>Global Progress and Its Limits</h2>
+            <p>
+                Globally, there has been measurable progress in improving the affordability of a healthy diet. The gap is narrowing, suggesting that policy efforts and international initiatives are beginning to have an impact.
+            </p>
+
+            <!-- CHART 2 — noticeably wider -->
+            <div class="chart-block chart-block--large">
+                <img src="images/CAoHD_faceted.gif" alt="Faceted chart: cost of a healthy diet over time by region">
+            </div>
+
+            <p>
+                However, "more affordable" does not mean affordable enough. For millions of people—particularly in low- and middle-income countries—even the minimum cost of a nutritionally adequate diet remains out of reach. Research suggests that individuals would need to spend at least <a href="https://www.csis.org/analysis/three-billion-people-cannot-afford-healthy-diets-what-does-mean-next-green-revolution">$3.75 per day</a> to meet dietary guidelines, with roughly $1.50 allocated to fruits and vegetables alone.
+            </p>
+            <p>
+                For many households, this is simply not feasible. Diets often rely on cheaper, calorie-dense staples like rice, wheat, and corn. While these foods provide energy, they lack essential nutrients. Diets low in fruits and vegetables are among the leading contributors to illness and premature death globally, with an estimated <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(19)30041-8/fulltext">39% of diet-related deaths</a> attributable to inadequate intake.
+            </p>
+
+
+            <!-- CHART 3 — full viewport width -->
+            <div class="chart-block chart-block--wide">
+                <img src="images/foodandveggiemap.gif" alt="World map: fruit and vegetable intake by country">
+            </div>
+
+            <p>
+                These disparities are the most visible on a global scale, and this is not simply a matter of personal choice or awareness. It reflects structural barriers: limited access, high costs, and food systems that do not support diverse, nutrient-rich diets.
+            </p>
+            <p>
+                At the same time, the popular narrative around food as medicine, which is often shaped by influencers and wellness culture, tends to overlook these realities. Recommendations that emphasize optimization and prevention assume a level of access that many people simply do not have.
+            </p>
+            <p>
+                Even in the United States, access remains uneven. Over <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7299236/">23 million Americans</a> live in food deserts, where obtaining fresh, affordable food is a persistent challenge. Globally, the barriers are even more pronounced.
+            </p>
+
+            <!-- ── Conclusion ─────────────────────── -->
+            <div class="conclusion">
+                <h2>Concluding Thoughts</h2>
+                <p>
+                    The growing momentum behind the Food is Medicine movement signals an important shift in how we think about health. But the data tells a more complicated story.
+                </p>
+                <p>
+                    Food has the potential to be a powerful tool for prevention and care, but only when it is accessible, affordable, and culturally relevant. Without addressing these structural barriers, the benefits of food as medicine will remain concentrated among those who already have the resources to act on it.
+                </p>
+                <p>
+                    So the question is not simply whether food can be medicine. It is whether we are willing to build systems that make it medicine for everyone.
+                </p>
+            </div>
+
+            <!-- ── About ──────────────────────────── -->
+            <h2>About this Story</h2>
+            <p>
+                Chart 1 was created using datasets from the
+                <a href="https://cdi.cdc.gov/?location=ALL&category=NPAW&indicators=NPW02" target="_blank" rel="noopener noreferrer">Centers for Disease Control and Prevention (CDC) Chronic Disease Indicators</a>.
+            </p>
+            <p>
+                Chart 2 was created using the
+                <a href="https://www.fao.org/faostat/en/#data/CAHD" target="_blank" rel="noopener noreferrer">Cost and Affordability of a Healthy Diet dataset</a>, and Chart 3 was created using
+                <a href="https://www.fao.org/faostat/en/#data/SUA" target="_blank" rel="noopener noreferrer">Food Availability Data</a>, both from the Food and Agriculture Organization of the United Nations (FAO).
+            </p>
+            <p>
+                The global population bar graph was constructed using data from a
+                <a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset" target="_blank" rel="noopener noreferrer">Kaggle dataset</a>
+                compiling population estimates from <a href="https://www.worldometers.info/world-population/">Worldmeter</a>.
+            </p>
+            <p>
+                All charts were coded in R and subsequently refined using Adobe Illustrator.
+            </p>
+            <p>
+                This data narrative was created as a final project for DATA 1500 at Brown University. Special thanks to Professor Reuben Fischer-Baum for his guidance, support, and instruction throughout the semester.
+            </p>
+
+            <div class="chart-block">
+                <div id="myChart"></div>
+                <div id="myTooltip">_</div>
+            </div>
+
+        </div><!-- /article -->
+    </body>
+</html>

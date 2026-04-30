@@ -1,33 +1,142 @@
-img, p, h1, h2, .divider {
-    width: 100%;
+/* ── Google Fonts ───────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ── Base reset ─────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --cream:   #faf7f2;
+    --ink:     #1a1a1a;
+    --mid:     #555;
+    --rule:    #d4c9b8;
+    --accent:  #b5451b;
+    --max-w:   740px;
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ── Background fruit icons ─────────────── */
+.bg-fruit {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.bg-fruit svg {
+    display: block;
+}
+
+/* ── Article wrapper ────────────────────── */
+.article {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Base text elements ─────────────────── */
+p {
+    font-size: 18px;
+    line-height: 1.4;
+    font-family: 'Crimson Text', Georgia, serif;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.4rem;
+    color: #222;
+}
+
+h1 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1rem;
     max-width: 640px;
     margin-left: auto;
     margin-right: auto;
 }
- 
-img {
-    display: block;
-    padding: 15px 0px;
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2.8rem auto 0.9rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: 640px;
 }
- 
-p {
-    font-size: 18px;
-    line-height: 1.4;
-    font-family: "Crimson Text";
+
+/* ── Header ─────────────────────────────── */
+.article-header {
+    border-top: 3px solid #b03258;
+    padding-top: 2rem;
+    margin-bottom: 2.5rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
 }
- 
-h1, h2 {
-    font-family: "Roboto";
+
+.kicker {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
 }
- 
+
+.byline {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--mid);
+    border-top: 1px solid #b03258;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+/* ── Divider ────────────────────────────── */
 .divider {
     height: 2px;
-    background-color: #9b1c1c;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    background-color: #b03258;
+    border: none;
+    margin: 10px auto;
+    max-width: 640px;
+    display: block;
 }
- 
-/* ── TikTok row: three videos side by side ── */
+
+/* ── Pull quote ─────────────────────────── */
+.pull-quote {
+    border-left: 4px solid var(--accent);
+    margin: 2rem auto;
+    padding: 0.6rem 1.4rem;
+    font-size: 1.35rem;
+    font-style: normal;
+    line-height: 1.5;
+    max-width: 640px;
+}
+
+/* ── Links ──────────────────────────────── */
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { opacity: 0.75; }
+
+/* ── TikTok row ──────────────────────────── */
 .tiktok-row {
     display: flex;
     flex-direction: row;
@@ -40,32 +149,121 @@ h1, h2 {
     margin-right: auto;
     padding: 15px 0;
 }
- 
+
 .tiktok-row .tiktok-embed {
     flex: 1 1 0;
     min-width: 0;
-    margin: 0 !important; /* override TikTok's default margins */
+    margin: 0 !important;
 }
- 
-/* Stack vertically on small screens */
+
 @media (max-width: 640px) {
     .tiktok-row {
         flex-direction: column;
         align-items: center;
     }
 }
- 
-/* ── Chart 3 (map): wider than the default content column ── */
-#chart3-container {
+
+/* ── Chart blocks ────────────────────────── */
+
+.chart-block {
+    margin: 0.5rem 0;
+}
+
+.chart-block img {
+    display: block;
     width: 100%;
+    height: auto;
+    padding: 0;
+    border-radius: 4px;
+}
+
+/* Chart 1 — slightly wider than body text (110%) */
+.chart-block--mid {
+    width: 130%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     max-width: 960px;
+}
+
+/* Chart 2 — noticeably wider (130%) */
+.chart-block--large {
+    width: 130%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 960px;
+}
+
+/* Chart 3 — full viewport width */
+.chart-block--wide {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1100px;
+    padding: 0 1rem;
+}
+
+.chart-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.5rem;
+}
+
+.chart-title {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.chart-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.82rem;
+    color: var(--mid);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.chart-source {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.73rem;
+    color: #999;
+    margin-top: 0.5rem;
+}
+
+#myChart svg {
+    width: 100%;
+    height: auto;
+}
+
+#myTooltip {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    color: var(--mid);
+    margin-top: 0.3rem;
+    min-height: 1.2em;
+}
+
+/* ── Concluding section ──────────────────── */
+.conclusion {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 3px solid #b03258;
+    max-width: 640px;
     margin-left: auto;
     margin-right: auto;
-    padding: 15px 0;
 }
- 
-#chart3-container img {
-    max-width: 100%;
-    padding: 0;
+
+.conclusion h2 {
+    font-style: normal;
+    font-size: 1.3rem;
+    border-bottom: none;
+    margin-top: 0;
+    max-width: none;
 }
-    
