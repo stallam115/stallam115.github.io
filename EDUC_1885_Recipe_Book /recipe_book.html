@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Providence Immigrant Community Recipe Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --saffron:    #F4A024;
+  --terra:      #C84B31;
+  --teal:       #2E86AB;
+  --leaf:       #558B2F;
+  --gold:       #E8C547;
+  --cream:      #FDF6ED;
+  --dark:       #1C1109;
+  --charcoal:   #2D2D2D;
+
+  --port-bg:  #E8F4F8; --port-accent: #2E86AB;
+  --dom-bg:   #FFF1EC; --dom-accent:  #C84B31;
+  --guat-bg:  #FFFDE7; --guat-accent: #D4A017;
+  --cape-bg:  #F1F8E9; --cape-accent: #558B2F;
+  --col-bg:   #FFF3E0; --col-accent:  #BF360C;
+  --ind-bg:   #FBE9E7; --ind-accent:  #E64A19;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: var(--dark);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; position: relative; overflow: hidden; padding: 3rem 2rem;
+}
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, #F4A02422 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, #C84B3122 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #2E86AB11 0%, transparent 70%);
+}
+.hero-orb { position:absolute; border-radius:50%; animation:float 8s ease-in-out infinite; opacity:.07; }
+.orb1{width:320px;height:320px;background:var(--saffron);top:-80px;left:-80px;animation-delay:0s;}
+.orb2{width:200px;height:200px;background:var(--terra);bottom:60px;right:80px;animation-delay:-3s;}
+.orb3{width:140px;height:140px;background:var(--teal);top:40%;left:10%;animation-delay:-6s;}
+.orb4{width:100px;height:100px;background:var(--leaf);bottom:20%;right:15%;animation-delay:-2s;}
+@keyframes float { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+
+.hero-eyebrow { font-family:'DM Sans',sans-serif; font-size:.85rem; letter-spacing:.25em; text-transform:uppercase; color:var(--saffron); margin-bottom:1.2rem; opacity:0; animation:fadeUp .8s .2s ease forwards; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,7vw,5.5rem); font-weight:900; line-height:1.08; color:#fff; opacity:0; animation:fadeUp .9s .4s ease forwards; }
+.hero h1 em { color:var(--saffron); font-style:italic; }
+.hero-subtitle { font-family:'Libre Baskerville',serif; font-size:clamp(1rem,2.2vw,1.3rem); color:#c8b89a; margin-top:1.2rem; max-width:560px; line-height:1.6; opacity:0; animation:fadeUp .9s .6s ease forwards; }
+.flags-row { display:flex; gap:1rem; margin-top:2.2rem; flex-wrap:wrap; justify-content:center; opacity:0; animation:fadeUp .9s .8s ease forwards; }
+.flag-pill { display:flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:100px; padding:.4rem 1rem; font-size:.85rem; color:#e8dcc8; backdrop-filter:blur(6px); cursor:pointer; text-decoration:none; transition:background .2s,border-color .2s,transform .2s; }
+.flag-pill:hover { background:rgba(244,160,36,.2); border-color:var(--saffron); transform:translateY(-2px); }
+.scroll-cue { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); opacity:0; animation:fadeIn 1s 1.4s ease forwards; }
+.scroll-cue span { display:block; width:24px;height:24px; border-right:2px solid var(--saffron); border-bottom:2px solid var(--saffron); transform:rotate(45deg); margin:-10px auto; animation:scrollPulse 1.4s infinite; }
+.scroll-cue span:nth-child(2){animation-delay:.2s;} .scroll-cue span:nth-child(3){animation-delay:.4s;}
+@keyframes scrollPulse { 0%{opacity:0;transform:rotate(45deg) translate(-4px,-4px);}50%{opacity:1;}100%{opacity:0;transform:rotate(45deg) translate(4px,4px);} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn { to{opacity:.7;} }
+
+/* NAV */
+nav { position:sticky; top:0; z-index:100; background:var(--dark); border-bottom:2px solid var(--saffron); display:flex; align-items:center; overflow-x:auto; scrollbar-width:none; }
+nav::-webkit-scrollbar{display:none;}
+.nav-logo { font-family:'Playfair Display',serif; font-size:.9rem; color:var(--saffron); padding:.85rem 1.4rem; white-space:nowrap; border-right:1px solid rgba(255,255,255,.1); font-style:italic; }
+.nav-links { display:flex; list-style:none; }
+.nav-links a { display:block; padding:.85rem 1.1rem; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:#bbb; text-decoration:none; white-space:nowrap; transition:color .2s,background .2s; }
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.06); }
+.nav-links a[data-accent="port"]:hover{color:var(--port-accent);}
+.nav-links a[data-accent="dom"]:hover{color:var(--dom-accent);}
+.nav-links a[data-accent="guat"]:hover{color:var(--guat-accent);}
+.nav-links a[data-accent="cape"]:hover{color:var(--cape-accent);}
+.nav-links a[data-accent="col"]:hover{color:var(--col-accent);}
+.nav-links a[data-accent="ind"]:hover{color:var(--ind-accent);}
+
+/* INTRO */
+.intro-section { max-width:820px; margin:0 auto; padding:5rem 2rem 4rem; }
+.section-label { font-size:.75rem; letter-spacing:.3em; text-transform:uppercase; color:var(--saffron); font-weight:500; margin-bottom:.8rem; }
+.intro-section h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:var(--dark); line-height:1.15; margin-bottom:2rem; }
+.intro-section h2 em { color:var(--terra); font-style:italic; }
+.intro-body p { font-family:'Libre Baskerville',serif; font-size:1.05rem; line-height:1.85; color:#3a3028; margin-bottom:1.4rem; }
+.providence-box { background:var(--dark); color:#e8dcc8; border-radius:16px; padding:2rem 2.5rem; margin-top:2rem; }
+.providence-box h3 { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--saffron); margin-bottom:.8rem; }
+.providence-box p { font-family:'Libre Baskerville',serif; font-size:.98rem; line-height:1.75; color:#c8b89a; margin-bottom:.8rem; }
+.stat-highlight { display:inline-block; font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:900; color:var(--saffron); line-height:1; }
+.communities-strip { display:grid; grid-template-columns:repeat(6,1fr); gap:0; margin:3rem 0 0; border-radius:12px; overflow:hidden; }
+.comm-cell { padding:1.2rem .5rem; text-align:center; font-size:.75rem; font-weight:500; letter-spacing:.04em; color:#fff; display:flex; flex-direction:column; align-items:center; gap:.4rem; cursor:pointer; text-decoration:none; transition:transform .2s,filter .2s; }
+.comm-cell:hover{transform:scaleY(1.05);filter:brightness(1.1);}
+.comm-cell .emoji{font-size:1.6rem;}
+.comm-cell:nth-child(1){background:var(--port-accent);}
+.comm-cell:nth-child(2){background:var(--dom-accent);}
+.comm-cell:nth-child(3){background:var(--guat-accent);}
+.comm-cell:nth-child(4){background:var(--cape-accent);}
+.comm-cell:nth-child(5){background:var(--col-accent);}
+.comm-cell:nth-child(6){background:var(--ind-accent);}
+
+/* RECIPE SECTIONS */
+.recipe-section { max-width:960px; margin:0 auto; padding:5rem 2rem; border-top:1px solid rgba(0,0,0,.08); }
+.recipe-header { display:grid; grid-template-columns:1fr auto; align-items:start; gap:1rem; margin-bottom:2.5rem; }
+.recipe-num { font-family:'Playfair Display',serif; font-size:5rem; font-weight:900; line-height:1; opacity:.1; color:var(--dark); font-style:italic; }
+.recipe-flag-badge { font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; font-weight:600; padding:.3rem .9rem; border-radius:100px; color:#fff; display:inline-block; margin-bottom:.7rem; }
+.recipe-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,3.2rem); font-weight:900; line-height:1.1; color:var(--dark); }
+.recipe-subtitle { font-family:'Libre Baskerville',serif; font-style:italic; font-size:1.05rem; color:#777; margin-top:.4rem; }
+.recipe-img-area { width:100%; height:340px; border-radius:16px; overflow:hidden; margin-bottom:2.5rem; position:relative; display:flex; align-items:center; justify-content:center; }
+.recipe-img-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.8rem; }
+.recipe-img-placeholder .dish-emoji{font-size:5rem;}
+.recipe-img-placeholder .dish-label { font-family:'Playfair Display',serif; font-size:1.1rem; font-style:italic; color:rgba(255,255,255,.6); }
+.recipe-body { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+
+.history-col h3, .recipe-col h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--dark); margin-bottom:1rem; display:flex; align-items:center; gap:.6rem; }
+.history-col h3::after, .recipe-col h3::after { content:''; flex:1; height:1px; background:currentColor; opacity:.2; }
+.history-text { font-family:'Libre Baskerville',serif; font-size:.95rem; line-height:1.8; color:#3a3028; }
+
+.ingredients-list { list-style:none; display:flex; flex-direction:column; gap:.35rem; margin-bottom:1.8rem; }
+.ingredients-list li { font-size:.93rem; padding:.4rem .7rem; border-radius:6px; background:rgba(0,0,0,.03); border-left:3px solid transparent; transition:background .15s; }
+.ingredients-list li::before { content:'·'; margin-right:.5rem; font-weight:700; font-size:1.1rem; line-height:0; vertical-align:middle; }
+
+.steps-list { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+.step-item { display:grid; grid-template-columns:auto 1fr; gap:.9rem; align-items:start; }
+.step-num { width:28px;height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; color:#fff; flex-shrink:0; margin-top:.1rem; }
+.step-content strong { display:block; font-size:.88rem; font-weight:600; margin-bottom:.25rem; color:var(--dark); }
+.step-content p { font-size:.88rem; line-height:1.65; color:#555; }
+
+.facts-box { border-radius:12px; padding:1.5rem; margin-top:2rem; }
+.facts-box h4 { font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700; color:#fff; margin-bottom:1rem; letter-spacing:.04em; }
+.facts-list { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+.facts-list li { font-size:.88rem; line-height:1.6; color:rgba(255,255,255,.85); padding-left:1.2rem; position:relative; }
+.facts-list li::before { content:'✦'; position:absolute; left:0; font-size:.6rem; top:.35rem; opacity:.7; }
+
+.where-box { margin-top:2rem; padding:1.2rem 1.5rem; background:var(--dark); border-radius:12px; }
+.where-box h4 { font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; color:var(--saffron); margin-bottom:.8rem; }
+.where-list { list-style:none; display:flex; flex-direction:column; gap:.4rem; }
+.where-list li { font-size:.9rem; color:#c8b89a; display:flex; align-items:center; gap:.5rem; }
+.where-list li::before{content:'📍';font-size:.8rem;}
+
+.extra-note { margin-top:1.2rem; padding:.9rem 1.2rem; background:rgba(244,160,36,.1); border-left:3px solid var(--saffron); border-radius:0 8px 8px 0; font-size:.88rem; color:#3a3028; font-style:italic; line-height:1.6; }
+
+/* SOURCES */
+.sources-box { margin-top:1.8rem; padding:1rem 1.4rem; background:rgba(0,0,0,.04); border-radius:10px; border-left:3px solid rgba(0,0,0,.15); }
+.sources-box h4 { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:#888; margin-bottom:.6rem; font-weight:600; }
+.sources-list { list-style:none; display:flex; flex-direction:column; gap:.3rem; }
+.sources-list li { font-size:.82rem; color:#666; line-height:1.5; padding-left:1rem; position:relative; }
+.sources-list li::before { content:'—'; position:absolute; left:0; color:#aaa; }
+
+/* FOOTER */
+footer { background:var(--dark); color:#8a7a6a; text-align:center; padding:3rem 2rem; }
+footer .footer-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--saffron); margin-bottom:.5rem; font-style:italic; }
+footer p { font-size:.85rem; line-height:1.7; max-width:480px; margin:0 auto; }
+footer .footer-flags { font-size:1.8rem; letter-spacing:.3rem; margin:1.2rem 0; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media(max-width:700px){
+  .recipe-body{grid-template-columns:1fr;}
+  .communities-strip{grid-template-columns:repeat(3,1fr);}
+  .recipe-header{grid-template-columns:1fr;}
+  .recipe-num{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-pattern"></div>
+  <div class="orb1 hero-orb"></div><div class="orb2 hero-orb"></div>
+  <div class="orb3 hero-orb"></div><div class="orb4 hero-orb"></div>
+  <p class="hero-eyebrow">By:Sneha Tallam</p>
+  <h1>A Providence<br><em>Immigrant Community</em><br>Recipe Book</h1>
+  <p class="hero-subtitle">Celebrating the flavors, stories, and traditions of the communities that make Providence home.</p>
+  <div class="flags-row">
+    <a href="#bacalhau" class="flag-pill">🇵🇹 Portuguese</a>
+    <a href="#bandera"  class="flag-pill">🇩🇴 Dominican</a>
+    <a href="#atol"     class="flag-pill">🇬🇹 Guatemalan</a>
+    <a href="#cachupa"  class="flag-pill">🇨🇻 Cape Verdean</a>
+    <a href="#natilla"  class="flag-pill">🇨🇴 Colombian</a>
+    <a href="#khichdi"  class="flag-pill">🇮🇳 Indian</a>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span></span><span></span><span></span></div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Providence Recipes</div>
+  <ul class="nav-links">
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#bacalhau" data-accent="port">🇵🇹 Bacalhau</a></li>
+    <li><a href="#bandera"  data-accent="dom">🇩🇴 La Bandera</a></li>
+    <li><a href="#atol"     data-accent="guat">🇬🇹 Atol de Elote</a></li>
+    <li><a href="#cachupa"  data-accent="cape">🇨🇻 Cachupa</a></li>
+    <li><a href="#natilla"  data-accent="col">🇨🇴 Natilla</a></li>
+    <li><a href="#khichdi"  data-accent="ind">🇮🇳 Khichdi</a></li>
+  </ul>
+</nav>
+
+<!-- INTRODUCTION -->
+<section class="intro-section reveal" id="intro">
+  <p class="section-label">Introduction</p>
+  <div class="intro-body">
+    <p>I decided to create a recipe book highlighting the recipes and stories of immigrant communities in Providence for my final project — not only because I love food, but because of my own experiences growing up around it.</p>
+    <p>As the daughter of South Asian Indian immigrants, I often found myself navigating the balance between fitting into Western culture and maintaining my cultural roots. Growing up, I sometimes clashed with my parents over what it meant to do things "the American way," whether it involved academics, relationships, or everyday habits. However, there was always one thing that brought us together: <strong>food</strong>.</p>
+    <p>I grew up helping my parents prepare South Indian home-cooked meals — from <em>Bendakaya Vepudu</em> (okra fry) to <em>Mamidikaya Pappu</em> (mango lentil stew) — initially simply because I enjoyed cooking. Over time, that curiosity became a deeper appreciation for Indian flavors and traditions. I became fascinated by the process of making <em>tadka</em> (or <em>taalimpu</em> in Telugu), the technique of frying spices such as mustard seeds, cumin, curry leaves, and dried red chilies to enhance a dish in its final step. I also loved how the same core spices — turmeric, cumin seeds, coriander powder, red chili powder, and garam masala — could create countless dishes depending on their proportions and additions, reflecting generations of history and tradition.</p>
+    <p>Food also became one of the ways I learned about my friends and their cultures. Sharing home-cooked meals at their houses made me feel closer to them and helped me recognize cultural similarities across cuisines. For example, Ethiopian cuisine often features stews eaten with injera, much like curries paired with roti or naan in Indian cuisine. These experiences showed me how food can serve as both a cultural expression and a point of connection.</p>
+    <p>Through this project, I hope to encourage others to try dishes from cultures different from their own and to learn about the histories, traditions, and stories tied to them. Food has the power to connect people, and in many ways, we are more similar than we think.</p>
+    <div class="providence-box">
+      <h3>Why Providence, Rhode Island?</h3>
+      <p><span class="stat-highlight">14.6%</span><br>of Rhode Island's residents are foreign-born, and Providence one of the most vibrant immigrant communities in New England.</p>
+      <p>In a city shaped by so many cultures, food becomes an especially meaningful way to understand the communities that make up Providence. This recipe book features dishes from some of the city's most prominent immigrant communities: Dominican, Guatemalan, Portuguese, Cape Verdean, Colombian, and Indian. The percent of foreign-born residents that each community makes up, respectively, is as follows: 22.1, 10.63, 9.64, 4.69, 4.09, 4.0. 
+        As someone who grew up in an immigrant household, I understand how difficult it can sometimes be to fully appreciate your own culture — or others' — while trying to fit into the dominant culture around you. This recipe book is not only a collection of dishes, but a celebration of the stories, histories, and traditions that immigrant communities bring to Providence.
+        
+        Sources: American Immigration Council, Stacker 
+      </p>
+</section>
+
+<!-- RECIPE 1 · BACALHAU -->
+<section class="recipe-section reveal" id="bacalhau" style="background:var(--port-bg);">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--port-accent);">🇵🇹 Portuguese Community</span>
+      <h2 class="recipe-title">Bacalhau com Batatas</h2>
+      <p class="recipe-subtitle">Portuguese Salt Cod with Potatoes</p>
+    </div>
+    <div class="recipe-num">01</div>
+  </div>
+  <div class="recipe-img-area">
+    <img src="images/Bacalhau.jpg" alt="Bacalhau com Batatas" style="width: 80%; height:100%; object-fit:cover;">
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--port-accent);">Cultural History</h3>
+      <p class="history-text">Bacalhau, or salted codfish, is one of the most iconic foods in Portuguese cuisine and culture. For centuries, it has been considered the country's <em>fiel amigo</em> (faithful friend), earning a place not only in everyday meals but also in religious celebrations, family traditions, and national identity.<br><br>
+      Salt cod became deeply connected to Portuguese culture through both religion and history. During centuries of Catholic fasting traditions, meat was prohibited on many days of the year, making cod an important alternative protein source. Because it was inexpensive and durable, bacalhau was originally associated with poorer communities, but it transcended class boundaries to become a defining national staple.<br><br>
+      In the fifteenth century, Portuguese navigators encountered vast cod fisheries near Newfoundland — which they called the <em>Terra dos Bacalhaus</em> (Land of Codfish). Because salted cod survived long voyages without spoiling, it became essential during Portugal's era of Atlantic trade and exploration. In the twentieth century, during the Estado Novo regime, the Portuguese government promoted bacalhau as a symbol of nationalism, eventually making Portugal one of the world's leading producers of dried salted cod by the 1950s. Today, a popular saying claims there are "365 ways to cook bacalhau" — one for every day of the year.</p>
+
+      <div class="facts-box" style="background:var(--port-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>Different Portuguese regions have their own signature cod dishes and preparation styles.</li>
+          <li>Popular forms include fritters (<em>pastéis de bacalhau</em>), croquettes, layered casseroles like Bacalhau à Gomes de Sá, and soups.</li>
+          <li>Bacalhau is commonly served during Christmas Eve dinner in many Portuguese households.</li>
+          <li>The Estado Novo government used bacalhau as a tool of nationalist promotion, running an official "bacalhau campaign."</li>
+        </ul>
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Portuguese restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>Cuisine Del Mar Providence</li>
+          <li>DJP Churrasqueira Marques</li>
+          <li>Aguardente</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Garden in the Kitchen – Portuguese Cod (Bacalhau com Batatas) Recipe</li>
+          <li>An Encomium of Bacalhau: The Portuguese Emblem of a Gastronomic Symphony</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--port-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--port-accent);">1½ lb dry salt cod</li>
+        <li style="border-left-color:var(--port-accent);">6 small yellow potatoes, peeled and sliced</li>
+        <li style="border-left-color:var(--port-accent);">1 red bell pepper, thinly sliced</li>
+        <li style="border-left-color:var(--port-accent);">1 onion, thinly sliced</li>
+        <li style="border-left-color:var(--port-accent);">3 cloves garlic, minced</li>
+        <li style="border-left-color:var(--port-accent);">3 bay leaves</li>
+        <li style="border-left-color:var(--port-accent);">½ tbsp peppercorns</li>
+        <li style="border-left-color:var(--port-accent);">½ cup olive oil</li>
+        <li style="border-left-color:var(--port-accent);">Handful of olives</li>
+        <li style="border-left-color:var(--port-accent);">Fresh parsley or cilantro, for garnish</li>
+      </ul>
+      <h3 style="color:var(--port-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">1</span><div class="step-content"><strong>Soak the Salt Cod</strong><p>Soak dry salt cod in cold water for 24–48 hours, changing the water every 6–8 hours to remove excess salt.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">2</span><div class="step-content"><strong>Prepare the Fish</strong><p>Bring a pot of water to a boil. Add bay leaves and peppercorns. Boil the cod for 2–3 minutes, then transfer to a plate.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">3</span><div class="step-content"><strong>Cook the Potatoes</strong><p>Using the same pot of water, boil the potatoes until fork-tender but not overly soft.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">4</span><div class="step-content"><strong>Sauté the Vegetables</strong><p>Heat ¼ cup olive oil in a skillet over medium heat. Sauté onions, garlic, and bell peppers until soft and fragrant.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">5</span><div class="step-content"><strong>Assemble the Dish</strong><p>Layer potatoes in a baking dish. Top with sautéed vegetables, then place cod on top. Drizzle remaining olive oil over and add olives.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--port-accent);">6</span><div class="step-content"><strong>Bake and Serve</strong><p>Bake uncovered at 350°F for about 30 minutes. Garnish with fresh parsley or cilantro before serving.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE 2 · LA BANDERA -->
+<section class="recipe-section reveal" id="bandera">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--dom-accent);">🇩🇴 Dominican Community</span>
+      <h2 class="recipe-title">La Bandera Dominicana</h2>
+      <p class="recipe-subtitle">The Dominican Republic's National Dish</p>
+    </div>
+    <div class="recipe-num">02</div>
+  </div>
+  <div class="recipe-img-area">
+    <img src="images/la_bandera.jpg.png" alt="La Bandera" style="width: 80%; height:100%; object-fit:cover;">
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--dom-accent);">Cultural History</h3>
+      <p class="history-text"><em>La Bandera Dominicana</em>, meaning "The Dominican Flag," is one of the most beloved dishes in Dominican cuisine. The dish traditionally consists of white rice, red beans, and meat — most commonly chicken or beef — and is often served alongside salad, avocado, or fried plantains. Simple yet deeply comforting, it is a staple in many Dominican households and commonly eaten for lunch.<br><br>
+      The dish gets its name from the colors of the Dominican flag: white rice for the white section, red beans for the red, and meat standing in for the blue. Beyond its symbolism, <em>La Bandera</em> reflects the blending of Spanish, African, and Indigenous Taíno influences that shape Dominican cuisine today. Seasonings such as garlic, onions, bell peppers, tomatoes, oregano, and cumin give the dish its uniquely Dominican flavor.<br><br>
+      Every Dominican family has its own version. Some coastal communities substitute fish for chicken or beef, while cooks in the Samaná Peninsula may add coconut milk to the beans for a sweeter, creamier flavor. Other variations include adding squash or pumpkin to the beans. Related dishes include <em>moro de guandules</em> (rice with pigeon peas) and <em>pica pollo</em> (fried chicken served with fried plantains).</p>
+
+      <div class="facts-box" style="background:var(--dom-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>Lunch is traditionally the largest meal of the day in Dominican culture, and La Bandera is a common centerpiece of that meal.</li>
+          <li>While the ingredients are simple, family recipes and seasoning styles are often passed down through generations.</li>
+          <li>Related dishes include <em>moro de guandules</em> (rice with pigeon peas) and <em>pica pollo</em> (fried chicken with plantains).</li>
+          <li>Some coastal communities use coconut milk in the beans for a sweeter regional variation.</li>
+        </ul>
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Dominican restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>La Gran Parada</li>
+          <li>Zeneida's Restaurant</li>
+          <li>Pito's Restaurant</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Recipes by Andie – Authentic La Bandera Dominicana Recipe</li>
+          <li>Remitly – National Dish of the Dominican Republic</li>
+          <li>Margo Verhagen Thesis – Dominican Food Culture and Identity (Utrecht University)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--dom-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--dom-accent);">1 lb chicken, cut into pieces</li>
+        <li style="border-left-color:var(--dom-accent);">2 cups white rice</li>
+        <li style="border-left-color:var(--dom-accent);">2 cups red beans (canned or pre-cooked)</li>
+        <li style="border-left-color:var(--dom-accent);">2 tbsp olive oil</li>
+        <li style="border-left-color:var(--dom-accent);">1 onion, chopped</li>
+        <li style="border-left-color:var(--dom-accent);">2 cloves garlic, minced</li>
+        <li style="border-left-color:var(--dom-accent);">1 bell pepper, chopped</li>
+        <li style="border-left-color:var(--dom-accent);">1 tomato, chopped</li>
+        <li style="border-left-color:var(--dom-accent);">1 tsp cumin · 1 tsp oregano</li>
+        <li style="border-left-color:var(--dom-accent);">Salt and pepper, to taste</li>
+        <li style="border-left-color:var(--dom-accent);">1 lime, sliced</li>
+        <li style="border-left-color:var(--dom-accent);">Fresh cilantro, for garnish</li>
+      </ul>
+      <h3 style="color:var(--dom-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--dom-accent);">1</span><div class="step-content"><strong>Cook the Rice</strong><p>In a saucepan, bring 4 cups of water to a boil. Add rice and a pinch of salt. Reduce heat, cover, and simmer 15–20 minutes until water is absorbed.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--dom-accent);">2</span><div class="step-content"><strong>Prepare the Chicken</strong><p>Heat olive oil in a large skillet over medium heat. Cook chicken pieces until golden brown on all sides, about 6–8 minutes. Remove and set aside.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--dom-accent);">3</span><div class="step-content"><strong>Build the Flavor Base</strong><p>In the same skillet, sauté onion, garlic, and bell pepper for 2–3 minutes. Add tomato, cumin, oregano, salt, and pepper. Cook another 3–4 minutes.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--dom-accent);">4</span><div class="step-content"><strong>Combine the Dish</strong><p>Add red beans and stir well. Return chicken to the pan, cover, and simmer for 10–12 minutes to meld the flavors.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--dom-accent);">5</span><div class="step-content"><strong>Serve</strong><p>Serve chicken and beans over rice. Garnish with fresh cilantro and lime wedges. Traditionally served with avocado, salad, or fried plantains.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE 3 · ATOL DE ELOTE -->
+<section class="recipe-section reveal" id="atol" style="background:#FFFDE7;">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--guat-accent);">🇬🇹 Guatemalan Community</span>
+      <h2 class="recipe-title">Atol de Elote</h2>
+      <p class="recipe-subtitle">A Traditional Guatemalan Corn Drink</p>
+    </div>
+    <div class="recipe-num">03</div>
+  </div>
+  <div class="recipe-img-area">
+    <img src="images/atol.jpg" alt="Atol de elote" style="width: 80%; height:100%; object-fit:cover;">
+  </div>
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--guat-accent);">Cultural History</h3>
+      <p class="history-text">Atol de Elote is a warm Guatemalan corn drink made from fresh corn, milk, cinnamon, and sugar. Creamy, lightly sweet, and comforting, it is commonly enjoyed for breakfast or during chilly mornings and evenings, and is often compared to the custardy richness of eggnog.<br><br>
+      Corn, or maize, has been central to Guatemalan culture for centuries, dating back to the ancient Maya civilization. Maize was not only a dietary staple alongside beans and squash, but also held spiritual significance — the Maya believed humans were created from corn, and one of the most important figures in Maya religion was the Maize God. Traditionally, atol is sold in open-air markets and by street vendors across Guatemala, especially during colder weather, for just a few quetzales. In some regions, the corn is ground by hand on a <em>metate</em> (a traditional grinding stone) for an especially smooth texture.<br><br>
+      Like many traditional foods, atol is surrounded by folklore. One old wives' tale claims that if a pregnant woman enters the kitchen while the atol is boiling, the drink will curdle. Another preparation style, known as <em>atol tres cocimientos</em> ("atol cooked three ways"), involves toasting the corn, soaking it in ash-seasoned water, and then boiling it.</p>
+
+      <div class="facts-box" style="background:var(--guat-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>There are many regional varieties of atol — <em>atol blanco</em> (white corn masa), <em>atol de masa</em> (nixtamalized corn), and versions with black beans or chocolate.</li>
+          <li>Atol is one of the most diverse categories of drink in Guatemalan cuisine, varying by community, season, and tradition.</li>
+          <li>Folklore says that if a pregnant woman enters the kitchen while atol is boiling, the drink will curdle.</li>
+          <li>The <em>atol tres cocimientos</em> preparation style involves toasting, soaking in ash water, and boiling the corn — three distinct stages.</li>
+        </ul>
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Guatemalan restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>Mi Guatemala Restaurant</li>
+          <li>Mi Ranchito Restaurant</li>
+          <li>Tikal Restaurant And Lounge</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Growing Up Bilingual – Easy Recipe for Atol de Elote Guatemalteco</li>
+          <li>Growing Up Bilingual – Traditional Guatemalan Drinks</li>
+          <li>Saveur – Guatemalan Food and Drink Traditions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--guat-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--guat-accent);">6 medium yellow corn cobs (~2 cups kernels)</li>
+        <li style="border-left-color:var(--guat-accent);">2½ cups cold water</li>
+        <li style="border-left-color:var(--guat-accent);">2 cups whole milk</li>
+        <li style="border-left-color:var(--guat-accent);">1 cinnamon stick</li>
+        <li style="border-left-color:var(--guat-accent);">1 cup sugar</li>
+        <li style="border-left-color:var(--guat-accent);">1 tsp salt</li>
+        <li style="border-left-color:var(--guat-accent);">Ground cinnamon, for garnish (optional)</li>
+        <li style="border-left-color:var(--guat-accent);">¼ cup cooked corn kernels, for garnish (optional)</li>
+      </ul>
+      <h3 style="color:var(--guat-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--guat-accent);">1</span><div class="step-content"><strong>Prepare the Corn</strong><p>Remove kernels from the corn cobs. Add kernels and ¾ cup of water to a blender and blend until smooth.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--guat-accent);">2</span><div class="step-content"><strong>Build the Drink</strong><p>Add remaining water, sugar, and salt to the blender mixture. Pour into a pot and add the cinnamon stick and milk.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--guat-accent);">3</span><div class="step-content"><strong>Cook the Atol</strong><p>Cook over low heat, stirring constantly for about 10 minutes, until the drink thickens to a creamy consistency.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--guat-accent);">4</span><div class="step-content"><strong>Serve</strong><p>Serve warm and garnish with ground cinnamon or cooked corn kernels if desired.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE 4 · CACHUPA -->
+<section class="recipe-section reveal" id="cachupa" style="background:var(--cape-bg);">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--cape-accent);">🇨🇻 Cape Verdean Community</span>
+      <h2 class="recipe-title">Cachupa</h2>
+      <p class="recipe-subtitle">Cape Verde's National Stew</p>
+    </div>
+    <div class="recipe-num">04</div>
+  </div>
+    <div class="recipe-img-area">
+      <img src="images/chachupa.jpg" alt="Cachupa" style="width: 80%; height:100%; object-fit:cover;">
+    </div>
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--cape-accent);">Cultural History</h3>
+      <p class="history-text">Cachupa is the national dish of Cape Verde and one of the most important symbols of Cape Verdean culture, history, and community. This slow-cooked stew is made with hominy corn, beans, root vegetables, and either fish or meat, creating a hearty and nourishing meal that reflects the resourcefulness of the islands' people.<br><br>
+      The origins of cachupa date back nearly 500 years. Traditionally considered a farmer's dish, it was often prepared on Sundays using leftover ingredients from the week. The dish developed through African culinary traditions, Portuguese colonization, and immigrant communities. Ingredients such as olive oil, bay leaves, and smoked sausage were introduced during Portuguese occupation in the fifteenth century, while local ingredients such as cassava, sweet potatoes, and beans remained central.<br><br>
+      In many communities, preparing cachupa is a communal activity — neighbors may contribute ingredients to a shared pot, emphasizing values of cooperation and mutual support. While wealthier households prepared <em>cachupa rica</em> with sausage, beef, pork, or seafood, simpler versions relied mainly on vegetables and beans. Some linguists connect the word cachupa to the Spanish word <em>cachupina</em>, referring to gatherings of people around music and celebration — a fitting connection given the importance of food, music, and community in Cape Verdean culture.</p>
+
+      <div class="facts-box" style="background:var(--cape-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>Leftover cachupa is often refried with eggs and sausage for breakfast the next morning.</li>
+          <li>Coastal communities such as Santo Antão and Santiago often include seafood like mussels or mackerel, while inland versions may use pork, chicken, or beef.</li>
+          <li>Some linguists connect "cachupa" to the Spanish word <em>cachupina</em>, meaning a gathering of people around music and celebration.</li>
+          <li>The dish is deeply associated with music, family gatherings, and Cape Verdean celebrations.</li>
+        </ul>
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Cape Verdean restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>Taste of Island</li>
+          <li>Cantinho Bar & Grill</li>
+          <li>10 Rocks Tapas Bar & Restaurant</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Remitly – National Dishes: Cachupa and Fascinating Facts About Cape Verde</li>
+          <li>Cabo Verde Expert – Cabo Verde Cachupa</li>
+          <li>Culinary Backstreets – Post-Colonial Lisbon & Cape Verdean Food Culture</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--cape-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--cape-accent);">1 cup hominy corn</li>
+        <li style="border-left-color:var(--cape-accent);">1 cup red beans</li>
+        <li style="border-left-color:var(--cape-accent);">1 onion, chopped</li>
+        <li style="border-left-color:var(--cape-accent);">2 tomatoes, diced</li>
+        <li style="border-left-color:var(--cape-accent);">1 bell pepper, diced</li>
+        <li style="border-left-color:var(--cape-accent);">1 lb beef, pork, or chicken, diced</li>
+        <li style="border-left-color:var(--cape-accent);">4 sausages (linguiça), sliced</li>
+        <li style="border-left-color:var(--cape-accent);">4 slices bacon, chopped</li>
+        <li style="border-left-color:var(--cape-accent);">2 sweet potatoes, peeled and diced</li>
+        <li style="border-left-color:var(--cape-accent);">1 cassava (mandioca), peeled and diced</li>
+        <li style="border-left-color:var(--cape-accent);">1 bunch kale, chopped</li>
+        <li style="border-left-color:var(--cape-accent);">Salt, pepper, and olive oil, to taste</li>
+      </ul>
+      <h3 style="color:var(--cape-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">1</span><div class="step-content"><strong>Soak the Corn and Beans</strong><p>Soak the hominy and red beans overnight in water. Drain and rinse before cooking.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">2</span><div class="step-content"><strong>Cook the Base</strong><p>Add hominy, beans, onion, tomatoes, and bell pepper to pot. Cover with water, bring to a boil, then reduce heat and simmer about 1 hour until tender.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">3</span><div class="step-content"><strong>Prepare the Meat</strong><p>In a separate pan, cook diced meat until browned. Add sausage and bacon, cooking until fragrant and lightly crisped.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">4</span><div class="step-content"><strong>Combine the Ingredients</strong><p>Add the cooked meat mixture to the pot with beans and hominy. Stir well to combine.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">5</span><div class="step-content"><strong>Add the Vegetables</strong><p>Add sweet potatoes and cassava. Cover and simmer for another 30 minutes until vegetables are tender.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--cape-accent);">6</span><div class="step-content"><strong>Finish and Serve</strong><p>Stir in chopped kale and cook 5 more minutes until wilted. Season with salt and pepper. Serve hot with bread or rice.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE 5 · NATILLA COLOMBIANA -->
+<section class="recipe-section reveal" id="natilla" style="background:var(--col-bg);">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--col-accent);">🇨🇴 Colombian Community</span>
+      <h2 class="recipe-title">Natilla Colombiana</h2>
+      <p class="recipe-subtitle">A Traditional Colombian Holiday Dessert</p>
+    </div>
+    <div class="recipe-num">05</div>
+  </div>
+  <div class="recipe-img-area">
+    <img src="images/natilla.jpg" alt="Natilla colombiana" style="width: 80%; height:100%; object-fit:cover;">
+  </div>
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--col-accent);">Cultural History</h3>
+      <p class="history-text">Natilla Colombiana is a creamy cinnamon dessert traditionally enjoyed during the Christmas season in Colombia. Smooth, rich, and lightly spiced, natilla is a beloved holiday staple often served alongside <em>buñuelos</em> — warm fried dough balls that are slightly cheesy and sweet. Together, the two dishes are deeply associated with family gatherings and holiday traditions throughout Colombia.<br><br>
+      Although natilla is often translated as "custard," the Colombian version is unique because it does not contain eggs. Instead, it is thickened with cornstarch, giving it a firmer texture that can be sliced and served cold. Colombian natilla is also distinct for its use of <em>panela</em>, an unrefined cane sugar that gives the dessert its characteristic caramel-like sweetness and warm brown color.<br><br>
+      Many historians believe natilla traces back to convents in Europe, where nuns prepared early versions of the dessert that later spread through Spanish colonization — others suggest the Colombian adaptation first became popular in the Antioquia region. In many Colombian communities, making natilla is a social tradition — families often cook it together outdoors over open fires during the holiday season. Recipes vary widely: some versions include coconut, raisins, prunes, chocolate, or citrus, while there are also two main color varieties — brown natilla (cinnamon and panela) and white natilla (sweetened condensed milk).</p>
+
+      <div class="facts-box" style="background:var(--col-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>Natilla is always served cold and sliced, not warm like a custard — its firmness comes entirely from cornstarch, not eggs.</li>
+          <li>There are two main color varieties: brown natilla (cinnamon and panela) and white natilla (sweetened condensed milk).</li>
+          <li>The Antioquia region is often cited as where the Colombian version of natilla first became widely popular.</li>
+          <li>Natilla and buñuelos are so closely paired that they are rarely served without each other during the Christmas season.</li>
+        </ul>
+      </div>
+
+      <div class="extra-note">
+        <strong>Ingredient Spotlight: Panela</strong> — An unrefined cane sugar widely used in Latin American cooking. It can often be found in the international food aisle of many grocery stores, including some Walmart and Target locations.
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Colombian restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>El Rincon Colombiano</li>
+          <li>Donde La Suegra</li>
+          <li>Patrona Restaurant Bar & Lounge</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Su Sabor – Natillas and Buñuelos: The Heart of Colombian Holiday Traditions</li>
+          <li>Home Cooked Harvest – Natilla Colombiana Recipe</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--col-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--col-accent);">3 cups whole milk, divided</li>
+        <li style="border-left-color:var(--col-accent);">¼ cup granulated sugar</li>
+        <li style="border-left-color:var(--col-accent);">½ cup grated panela</li>
+        <li style="border-left-color:var(--col-accent);">2 cinnamon sticks</li>
+        <li style="border-left-color:var(--col-accent);">½ cup cornstarch</li>
+        <li style="border-left-color:var(--col-accent);">1 tbsp unsalted butter</li>
+        <li style="border-left-color:var(--col-accent);">Ground cinnamon, for topping (optional)</li>
+      </ul>
+      <h3 style="color:var(--col-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--col-accent);">1</span><div class="step-content"><strong>Prepare the Base</strong><p>In a medium pot, combine 2 cups of milk, granulated sugar, panela, and cinnamon sticks. Stir well with a wooden spoon.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--col-accent);">2</span><div class="step-content"><strong>Heat the Mixture</strong><p>Bring the mixture to a boil over medium heat. Once boiling, remove from heat and place on a cool burner.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--col-accent);">3</span><div class="step-content"><strong>Mix the Cornstarch</strong><p>In a separate bowl, slowly whisk cornstarch into the remaining 1 cup of milk until smooth.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--col-accent);">4</span><div class="step-content"><strong>Thicken the Natilla</strong><p>Remove cinnamon sticks from the pot and return to medium-low heat. Add cornstarch mixture and butter. Stir continuously for 8–10 minutes until thickened.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--col-accent);">5</span><div class="step-content"><strong>Chill and Serve</strong><p>Pour into a buttered 9×9-inch baking dish. Refrigerate at least 2 hours until firm. Sprinkle with ground cinnamon before serving.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE 6 · KHICHDI -->
+<section class="recipe-section reveal" id="khichdi" style="background:var(--ind-bg);">
+  <div class="recipe-header">
+    <div>
+      <span class="recipe-flag-badge" style="background:var(--ind-accent);">🇮🇳 Indian Community</span>
+      <h2 class="recipe-title">Vegetable Khichdi</h2>
+      <p class="recipe-subtitle">India's Ancient Comfort Dish</p>
+    </div>
+    <div class="recipe-num">06</div>
+  </div>
+    <img src="images/kichidi.jpg" alt="Vegetable Kichidi" style="width:100%; height:100%; object-fit:cover;">
+  </div>
+  </div>
+  <div class="recipe-body">
+    <div class="history-col">
+      <h3 style="color:var(--ind-accent);">Cultural History</h3>
+      <p class="history-text">Khichdi is one of India's oldest and most beloved comfort foods. Made from rice and lentils cooked together until soft and porridge-like, the dish is simple, nourishing, and deeply tied to Indian culinary history. Across many Indian households, khichdi is prepared when someone is sick or recovering — much like chicken soup in other cultures. Warm and easy to digest, it is considered a food that brings comfort and healing.<br><br>
+      The word khichdi comes from the Sanskrit term <em>khiccā</em>, meaning a dish made from rice and legumes. Historians believe versions of the dish have existed in the Indian subcontinent for more than 2,000 years — archaeologists excavating the ancient site of Ter in Maharashtra discovered pots with burnt remnants of rice and mung beans. References appear in the Hindu Vedas (dating back over 3,000 years), and the Moroccan traveler Ibn Battuta noted the dish's popularity in the fourteenth century. The Greek diplomat Megasthenes described rice and pulses as a common Indian meal as early as 290 BCE.<br><br>
+      Though often associated with simplicity, khichdi has existed in many luxurious forms. During the Mughal era, royal kitchens transformed the dish by adding rose water, nutmeg, pistachios, raisins, and edible silver leaf. Today there are countless regional varieties — from Gujarat's <em>sukhpawni</em> (meaning "something that brings comfort and pleasure") to sweet versions with saffron, cardamom, and cinnamon. Khichdi may even have influenced Egypt's national dish <em>koshary</em>, which also combines rice and lentils.</p>
+
+      <div class="facts-box" style="background:var(--ind-accent);">
+        <h4>Fun Facts & Cultural Notes</h4>
+        <ul class="facts-list">
+          <li>Many Indians associate khichdi with childhood, home cooking, and being cared for — it is one of the first solid foods given to babies.</li>
+          <li>Sweet khichdi varieties exist across several regions, featuring saffron, cardamom, cinnamon, sugar, and thickened milk.</li>
+          <li>Gujarat's version is called <em>sukhpawni</em> — literally meaning "something that brings comfort and pleasure."</li>
+          <li>Khichdi may have influenced Egypt's national dish <em>koshary</em>, which similarly combines rice and lentils with additional ingredients.</li>
+        </ul>
+      </div>
+
+      <div class="extra-note">
+        <strong>Key Ingredients:</strong> Moong dal, basmati rice, curry leaves, hing, and garam masala can often be found at Indian grocery stores such as <em>Not Just Spices</em> in Providence.
+      </div>
+
+      <div class="where-box">
+        <h4>Top rated Indian restaurants near Providence</h4>
+        <ul class="where-list">
+          <li>India Restaurant</li>
+          <li>Rasoi</li>
+          <li>Kabob and Curry</li>
+        </ul>
+      </div>
+
+      <div class="sources-box">
+        <h4>Sources</h4>
+        <ul class="sources-list">
+          <li>Live History India – The Ancient and Enduring Story of Khichdi</li>
+          <li>NPR – Khichuri: An Ancient Indian Comfort Dish With a Global Influence</li>
+          <li>South China Morning Post – How Khichdi Became India's Comfort Food</li>
+          <li>Upbeat Anisha – Khichdi Recipe</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-col">
+      <h3 style="color:var(--ind-accent);">Ingredients</h3>
+      <ul class="ingredients-list">
+        <li style="border-left-color:var(--ind-accent);">2 tbsp neutral oil</li>
+        <li style="border-left-color:var(--ind-accent);">½ cup moong dal (split mung beans)</li>
+        <li style="border-left-color:var(--ind-accent);">½ cup white basmati rice</li>
+        <li style="border-left-color:var(--ind-accent);">4 cups water</li>
+        <li style="border-left-color:var(--ind-accent);">½ tsp cumin seeds · 1 sprig curry leaves · 1 bay leaf</li>
+        <li style="border-left-color:var(--ind-accent);">Pinch of hing (asafetida) — optional</li>
+        <li style="border-left-color:var(--ind-accent);">2-inch piece ginger, grated</li>
+        <li style="border-left-color:var(--ind-accent);">1 green chili, minced</li>
+        <li style="border-left-color:var(--ind-accent);">½ red onion, finely chopped</li>
+        <li style="border-left-color:var(--ind-accent);">1 tomato, chopped</li>
+        <li style="border-left-color:var(--ind-accent);">Salt · ½ tsp turmeric · ½ tsp red chili powder · ½–1 tsp garam masala</li>
+        <li style="border-left-color:var(--ind-accent);">1 cup mixed vegetables (carrots, peas, beans, etc.)</li>
+        <li style="border-left-color:var(--ind-accent);">Fresh cilantro, for garnish</li>
+      </ul>
+      <h3 style="color:var(--ind-accent);">Instructions</h3>
+      <ol class="steps-list">
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">1</span><div class="step-content"><strong>Soak the Rice and Lentils</strong><p>Rinse and soak moong dal and basmati rice in water while preparing the other ingredients.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">2</span><div class="step-content"><strong>Build the Flavor Base</strong><p>Heat oil in pot (Instant Pot sauté, pressure cooker, or regular pot). Add cumin seeds and sizzle 1 minute. Add hing, curry leaves, ginger, and green chili. Add onions and cook until translucent.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">3</span><div class="step-content"><strong>Add Tomatoes and Spices</strong><p>Add tomatoes and a pinch of salt. Cook until softened, about 3–4 minutes. Stir in turmeric, red chili powder, and garam masala.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">4</span><div class="step-content"><strong>Add Vegetables, Rice & Lentils</strong><p>Add mixed vegetables and cook a few minutes. Drain soaked rice and lentils, add to pot with 4 cups water and salt to taste.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">5</span><div class="step-content"><strong>Cook the Khichdi</strong><p><strong>Instant Pot:</strong> high pressure 12 min, natural release. <strong>Pressure Cooker:</strong> high heat to first whistle, low 5 min, natural release. <strong>Stovetop:</strong> boil then simmer 20–30 min until porridge-like.</p></div></li>
+        <li class="step-item"><span class="step-num" style="background:var(--ind-accent);">6</span><div class="step-content"><strong>Serve</strong><p>Adjust salt if needed and garnish with fresh cilantro. Serve warm.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-flags">🇵🇹 🇩🇴 🇬🇹 🇨🇻 🇨🇴 🇮🇳</div>
+  <p class="footer-title">A Providence Immigrant Community Recipe Book</p>
+  <p>A celebration of the stories, histories, and traditions that immigrant communities bring to Providence, Rhode Island. Food has the power to connect people — and in many ways, we are more similar than we think.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.ingredients-list li').forEach(li => {
+  li.addEventListener('mouseenter', () => { li.style.background = 'rgba(0,0,0,.07)'; });
+  li.addEventListener('mouseleave', () => { li.style.background = 'rgba(0,0,0,.03)'; });
+});
+</script>
+</body>
+</html>
